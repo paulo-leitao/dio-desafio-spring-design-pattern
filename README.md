@@ -8,3 +8,5 @@ If the show requested was not in the integrated database then the algorithm will
 ## Features
 
 - Add/Remove TV Shows from watched list.
+
+## TESTE
