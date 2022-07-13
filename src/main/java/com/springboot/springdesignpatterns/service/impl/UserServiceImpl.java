@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springboot.springdesignpatterns.exception.BusinessException;
 import com.springboot.springdesignpatterns.model.User;
 import com.springboot.springdesignpatterns.repository.UserRepository;
 import com.springboot.springdesignpatterns.service.UserService;
@@ -34,9 +35,10 @@ public class UserServiceImpl implements UserService{
   @Override
   public void updateUser(Integer id, User user) {
     Optional<User> userOlder = userRepository.findById(id);
-    if (userOlder.isPresent()) {
-      userRepository.save(user);
+    if (!userOlder.isPresent()) {
+      throw new BusinessException("Usuário não encontrado.");
     }
+    userRepository.save(user);
   }
 
   @Override
