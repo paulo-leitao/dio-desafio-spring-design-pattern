@@ -68,7 +68,12 @@ public class ShowServiceImpl implements ShowService{
       boolean hasShow = searchForMatch(currentUser, show);
       if (hasShow) {
         List<Show> watched = currentUser.getWatched().getList();
-        Show getFromList = watched.stream().filter(userShow -> (userShow.getTitle()== null)?false : userShow.getTitle().toLowerCase().contains(show.getTitle().toLowerCase())).findFirst().get();
+        Show getFromList = watched.stream()
+            .filter(userShow -> (userShow.getTitle() == null)
+                ? false
+                : userShow.getTitle().toLowerCase()
+                    .contains(show.getTitle().toLowerCase()))
+            .findFirst().get();
         updateUserWatchedList(currentUser, getFromList, true);
       }
     }
@@ -76,7 +81,8 @@ public class ShowServiceImpl implements ShowService{
   
   private boolean searchForMatch(User currentUser, Show show) {
     List<Show> watched = currentUser.getWatched().getList();
-    boolean hasShow = watched.stream().anyMatch(userShow -> (userShow.getTitle()== null)?false : userShow.getTitle().toLowerCase().contains(show.getTitle().toLowerCase()));
+    boolean hasShow = watched.stream().anyMatch(userShow -> (userShow.getTitle() == null) ? false
+        : userShow.getTitle().toLowerCase().contains(show.getTitle().toLowerCase()));
     return hasShow;
   }
 
