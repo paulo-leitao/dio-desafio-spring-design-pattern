@@ -7,8 +7,14 @@ import javax.persistence.Embeddable;
 import javax.persistence.Lob;
 
 import io.swagger.v3.oas.annotations.media.ArraySchema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Embeddable
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Watched {
   
   // @Column(name="shows_list")
