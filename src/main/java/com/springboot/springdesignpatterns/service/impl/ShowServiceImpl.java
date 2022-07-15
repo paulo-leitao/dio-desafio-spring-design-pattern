@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springboot.springdesignpatterns.exception.BusinessException;
 // import com.springboot.springdesignpatterns.dto.ShowDTO;
 import com.springboot.springdesignpatterns.model.Show;
 import com.springboot.springdesignpatterns.model.User;
@@ -48,6 +49,8 @@ public class ShowServiceImpl implements ShowService{
           Show newShow = onDbShow.stream().findFirst().get();
           updateUserWatchedList(currentUser, newShow, false);
           return newShow;
+        } else {
+          throw new BusinessException("Movie/series already listed.");
         }
       } else {
         Show newShow = omdbService.findShow(show.getTitle());
@@ -56,7 +59,7 @@ public class ShowServiceImpl implements ShowService{
         return newShow;
       }
     }
-    return null;
+    throw new BusinessException("User not found.");
   }
 
   
@@ -75,11 +78,15 @@ public class ShowServiceImpl implements ShowService{
                     .contains(show.getTitle().toLowerCase()))
             .findFirst().get();
         updateUserWatchedList(currentUser, getFromList, true);
+      } else {
+        throw new BusinessException("Show not found in the user's list.");
       }
+    } else {
+      throw new BusinessException("User not found.");
     }
   }
   
-  private boolean searchForMatch(User currentUser, Show show) {
+  public boolean searchForMatch(User currentUser, Show show) {
     List<Show> watched = currentUser.getWatched().getList();
     boolean hasShow = watched.stream().anyMatch(userShow -> (userShow.getTitle() == null) ? false
         : userShow.getTitle().toLowerCase().contains(show.getTitle().toLowerCase()));
@@ -94,7 +101,7 @@ public class ShowServiceImpl implements ShowService{
    * @param newShow
    * @param remove
    */
-  private void updateUserWatchedList(User currentUser, Show newShow, boolean remove) {
+  public void updateUserWatchedList(User currentUser, Show newShow, boolean remove) {
     Watched userList = currentUser.getWatched();
     if( remove ){
       userList.removeFromList(newShow);
