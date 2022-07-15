@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.springboot.springdesignpatterns.builder.ShowBuilder;
 import com.springboot.springdesignpatterns.builder.UserBuilder;
+import com.springboot.springdesignpatterns.builder.WatchedBuilder;
 import com.springboot.springdesignpatterns.exception.BusinessException;
 import com.springboot.springdesignpatterns.model.Show;
 import com.springboot.springdesignpatterns.model.User;
@@ -71,7 +72,9 @@ public class ShowServiceTest {
     // Given
     Integer id = 1;
     Show show = ShowBuilder.builder().title("Another Show").build().toShow();
-    User currentUser = UserBuilder.builder().build().toUser();
+    User currentUser = UserBuilder.builder()
+        .watched(WatchedBuilder.builder().build().toWatched())
+        .build().toUser();
 
     when(userRepository.findById(id)).thenReturn(Optional.of(currentUser));
     when(showRepository.findByTitleContainingIgnoreCase(show.getTitle())).thenReturn(Collections.singletonList(show));
@@ -95,7 +98,9 @@ public class ShowServiceTest {
     Integer id = 1;
     Show show = mock(Show.class);
     Show newShow = ShowBuilder.builder().title("New Show").build().toShow();
-    User currentUser = UserBuilder.builder().build().toUser();
+    User currentUser = UserBuilder.builder()
+        .watched(WatchedBuilder.builder().build().toWatched())
+        .build().toUser();
 
     when(userRepository.findById(id)).thenReturn(Optional.of(currentUser));
     when(showRepository.findByTitleContainingIgnoreCase(show.getTitle())).thenReturn(Collections.emptyList());
@@ -115,7 +120,9 @@ public class ShowServiceTest {
     // Given
     Integer id = 1;
     Show show = ShowBuilder.builder().build().toShow();
-    User currentUser = UserBuilder.builder().build().toUser();
+    User currentUser = UserBuilder.builder()
+        .watched(WatchedBuilder.builder().build().toWatched())
+        .build().toUser();
 
     when(userRepository.findById(id)).thenReturn(Optional.of(currentUser));
     when(showRepository.findByTitleContainingIgnoreCase(show.getTitle())).thenReturn(Collections.singletonList(show));
@@ -148,7 +155,9 @@ public class ShowServiceTest {
     // Given
     Integer id = 1;
     Show show = ShowBuilder.builder().build().toShow();
-    User currentUser = UserBuilder.builder().build().toUser();
+    User currentUser = UserBuilder.builder()
+        .watched(WatchedBuilder.builder().build().toWatched())
+        .build().toUser();
 
     when(userRepository.findById(id)).thenReturn(Optional.of(currentUser));
 
@@ -181,7 +190,9 @@ public class ShowServiceTest {
     // Given
     Integer id = 1;
     Show show = ShowBuilder.builder().title("Different Movie").build().toShow();
-    User currentUser = UserBuilder.builder().build().toUser();
+    User currentUser = UserBuilder.builder()
+        .watched(WatchedBuilder.builder().build().toWatched())
+        .build().toUser();
 
     when(userRepository.findById(id)).thenReturn(Optional.of(currentUser));
 

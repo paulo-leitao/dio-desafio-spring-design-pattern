@@ -17,8 +17,8 @@ public class UserBuilder {
   @Builder.Default
   private String name = "Teste User";
 
-  @Builder.Default
-  private Watched watched = WatchedBuilder.builder().build().toWatched();
+  // @Builder.Default
+  private Watched watched; //= WatchedBuilder.builder().build().toWatched();
 
   public User toUser() {
     return new User(id, name, watched);
